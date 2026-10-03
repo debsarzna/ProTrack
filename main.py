@@ -1,6 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication
 from database.database import Database
+from features.Dashboard.activity_log import activity_log
 from features.Employee.service import EmployeeService
 from windows.login_window import loginwindow
 from windows.main_window import mainwindow
@@ -11,6 +12,7 @@ def main() -> int:
 
     database = Database()
     database.create_tables()
+    activity_log.setup(database)
     employee_service = EmployeeService(database)
     employee_service.ensure_default_admin()
 

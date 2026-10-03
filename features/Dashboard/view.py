@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import *
+from PyQt6.QtGui import QColor
 from features.Dashboard.activity_log import activity_log
 class Dashboard(QWidget):
     def __init__(self, product_service, employee_service):
@@ -9,7 +10,7 @@ class Dashboard(QWidget):
         layout = QVBoxLayout(self)
         card_style = """
             QLabel {
-                background-color: white;
+                background-color: #71717A;
                 color: #18181B;
                 border: 1px solid #E4E4E7;
                 border-radius: 8px;
@@ -38,26 +39,33 @@ class Dashboard(QWidget):
             label.setStyleSheet(card_style)
             status_row.addWidget(label)
         layout.addLayout(status_row)
-
-        layout.addStretch()
-
         activity_title = QLabel("Recent Activity")
-        activity_title.setStyleSheet("font-size: 16px; font-weight: bold;")
+        activity_title.setStyleSheet("font-size: 12px; font-weight: bold;")
         layout.addWidget(activity_title)
 
-        self.activity_table = QTableWidget(0, 3)
-        self.activity_table.setHorizontalHeaderLabels(["Action", "Type", "Details"])
+        self.activity_table = QTableWidget(0, 4)
+        self.activity_table.setFixedHeight(300)
+        self.activity_table.setHorizontalHeaderLabels(["Action", "Type", "Details", "Time"])
         self.activity_table.verticalHeader().setVisible(False)
         self.activity_table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
         self.activity_table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self.activity_table.setAlternatingRowColors(True)
         self.activity_table.setShowGrid(False)
-        self.activity_table.horizontalHeader().setStretchLastSection(True)
-        self.activity_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
-        self.activity_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
-        layout.addWidget(self.activity_table, 1)
+
+        header = self.activity_table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
+        layout.addWidget(self.activity_table)
+        layout.addStretch()
 
         self.refresh()
+    ACTION_COLORS = {
+        "Added": "#16A34A",
+        "Updated": "#CA8A04",
+        "Deleted": "#DC2626",
+    }
 
     def refresh(self):
         products = self.product_service.get_product()
@@ -77,9 +85,14 @@ class Dashboard(QWidget):
     def load_activity(self):
         entries = activity_log.recent(10)
         self.activity_table.setRowCount(len(entries))
-        for row, entry in enumerate(entries):
-            for col, value in enumerate(entry):
-                self.activity_table.setItem(row, col, QTableWidgetItem(str(value)))
+        for row, (action, target, details, time) in enumerate(entries):
+            color = QColor(self.ACTION_COLORS.get(action, "#E4E4E7"))
+            values = (action, target, details, time)
+            for col, value in enumerate(values):
+                item = QTableWidgetItem(str(value))
+                if col == 0:
+                    item.setForeground(color)
+                self.activity_table.setItem(row, col, item)
 
     def showEvent(self, event):
         self.refresh()

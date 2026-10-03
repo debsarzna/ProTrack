@@ -12,7 +12,7 @@ class loginwindow(QWidget):
         super().__init__()
         self.employee_service = employee_service
         self.setWindowTitle("Login")
-        self.setFixedSize(250, 250)
+        self.setFixedSize(300, 250)
         self.build_ui()
         self.apply_styles()
 
