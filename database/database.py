@@ -10,7 +10,6 @@ class Database:
 
     def create_tables(self) -> None:
         with self.connect() as con:
-            #PRODUCT
             con.execute(
                 """
                 CREATE TABLE IF NOT EXISTS products (
@@ -22,7 +21,6 @@ class Database:
                 )
                 """
             )
-            #EMPLOYEE
             con.execute(
                 """
                 CREATE TABLE IF NOT EXISTS employees (
