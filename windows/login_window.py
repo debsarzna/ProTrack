@@ -36,7 +36,7 @@ class loginwindow(QWidget):
         layout.addWidget(self.password)
 
         login_button = QPushButton("Login")
-        login_button.setFixedSize(200, 37)
+        login_button.setFixedSize(80, 38)
         login_button.clicked.connect(self.attempt_login)
         self.username.returnPressed.connect(self.attempt_login)
         self.password.returnPressed.connect(self.attempt_login)
