@@ -110,8 +110,10 @@ class EmployeePage(QWidget):
         self.table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
         self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
         self.table.setHorizontalHeaderLabels(["Name", "Username"])
-        self.table.setColumnWidth(0, 250)
-        self.table.setColumnWidth(1, 250)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.table.verticalHeader().setVisible(False)
+        self.table.setColumnWidth(0, 200)
+        self.table.setColumnWidth(1, 200)
         layout.addWidget(self.table)
 
         update_button = QPushButton("Update")

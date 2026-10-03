@@ -117,9 +117,9 @@ class ProductPage(QWidget):
         self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
         self.table.setHorizontalHeaderLabels(["Name", "Price", "Quantity", "Status"])
         self.table.setColumnWidth(0, 200)
-        self.table.setColumnWidth(1, 100)
+        self.table.setColumnWidth(1, 150)
         self.table.setColumnWidth(2, 100)
-        self.table.setColumnWidth(3, 150)
+        self.table.setColumnWidth(3, 127)
         layout.addWidget(self.table)
 
         self.load_products()
@@ -189,7 +189,7 @@ class ProductPage(QWidget):
                 quantity=quantity,
                 status=self.compute_status(quantity),
             )
-            self.product_service.aduct(product)
+            self.product_service.add_product(product)
             self.search_products()
 
     def open_update_product(self):
@@ -203,7 +203,7 @@ class ProductPage(QWidget):
         current = Product(
             id=product_id,
             name=name_item.text(),
-            price=float(self.table.item(row, 1).text()),
+            price=float(self.table.item(row, 1).text().replace(",", "")),
             quantity=int(self.table.item(row, 2).text()),
             status=self.table.item(row, 3).text(),
         )
@@ -233,7 +233,7 @@ class ProductPage(QWidget):
             name_item = QTableWidgetItem(product.name)
             name_item.setData(Qt.ItemDataRole.UserRole, product.id)
             self.table.setItem(row, 0, name_item)
-            self.table.setItem(row, 1, QTableWidgetItem(str(product.price)))
+            self.table.setItem(row, 1, QTableWidgetItem(f"{product.price:,.2f}"))
             self.table.setItem(row, 2, QTableWidgetItem(str(product.quantity)))
             status_item = QTableWidgetItem(product.status)
             status_item.setForeground(QColor(self.STATUS_COLORS.get(product.status, "#18181B")))

@@ -1,5 +1,4 @@
 from PyQt6.QtWidgets import *
-from PyQt6.QtCore import Qt
 from features.Dashboard.activity_log import activity_log
 class Dashboard(QWidget):
     def __init__(self, product_service, employee_service):
@@ -8,9 +7,6 @@ class Dashboard(QWidget):
         self.employee_service = employee_service
 
         layout = QVBoxLayout(self)
-        title = QLabel("Dashboard")
-        title.setStyleSheet("font-size: 22px; font-weight: bold;")
-
         card_style = """
             QLabel {
                 background-color: white;

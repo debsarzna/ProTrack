@@ -5,13 +5,25 @@ from features.Product.service import ProductService
 from features.Employee.view import EmployeePage
 from features.Employee.service import EmployeeService
 from features.Dashboard.view import Dashboard
+
+class HoverMenu(QWidget):
+    hovered = pyqtSignal(bool)   # True when the mouse enters, False when it leaves
+
+    def enterEvent(self, event):
+        self.hovered.emit(True)
+        super().enterEvent(event)
+
+    def leaveEvent(self, event):
+        self.hovered.emit(False)
+        super().leaveEvent(event)
+
 class mainwindow(QMainWindow):
     logged_out = pyqtSignal()
 
     def __init__(self, database):
         super().__init__()
         self.database = database
-        self.setWindowTitle("Main Window")
+        self.setWindowTitle("ProTrack")
         self.setFixedSize(761, 500)
         self.build_ui()
 
@@ -24,27 +36,51 @@ class mainwindow(QMainWindow):
         main_layout.setSpacing(0)
 
         sidebar_widget = QWidget()
-        sidebar_widget.setFixedWidth(150)
+        sidebar_widget.setFixedWidth(120)
         sidebar_widget.setStyleSheet("""
             QWidget {
                 background-color: #18181B;
             }
+            QPushButton {
+                background-color: transparent;
+                color: #E4E4E7;
+                border: none;
+                border-radius: 6px;
+                padding: 10px;
+                text-align: left;
+            }
+            QPushButton:hover {
+                background-color: #27272A;
+                color: white;
+            }
+            QPushButton:pressed {
+                background-color: #3F3F46;
+            }
         """)
-        sidebar = QVBoxLayout(sidebar_widget)
+        sidebar_layout = QVBoxLayout(sidebar_widget)
 
+        menu_box = HoverMenu()
+        menu = QVBoxLayout(menu_box)
+        menu.setContentsMargins(0, 0, 0, 0)
+
+        menu_button = QPushButton("☰  Menu")
         dashboard_button = QPushButton("Dashboard")
-        sidebar.addWidget(dashboard_button)
-
         employee_button = QPushButton("Employee")
-        sidebar.addWidget(employee_button)
-
         products_button = QPushButton("Products")
-        sidebar.addWidget(products_button)
-
-        sidebar.addStretch()
-
         logout_button = QPushButton("Logout")
-        sidebar.addWidget(logout_button)
+
+        for b in (menu_button, dashboard_button, employee_button,
+                  products_button, logout_button):
+            menu.addWidget(b)
+
+        menu_items = [dashboard_button, employee_button, products_button, logout_button]
+        for b in menu_items:
+            b.hide()
+
+        menu_box.hovered.connect(lambda inside: [b.setVisible(inside) for b in menu_items])
+
+        sidebar_layout.addWidget(menu_box)
+        sidebar_layout.addStretch()
 
         product_service = ProductService(self.database)
         employee_service = EmployeeService(self.database)
@@ -68,8 +104,5 @@ class mainwindow(QMainWindow):
         logout_button.clicked.connect(self.logged_out.emit)
 
 
-    def show_dashboard(self):
-        self.dashboard_page.refresh()
-        self.pages_layout.setCurrentIndex(0)
 
 

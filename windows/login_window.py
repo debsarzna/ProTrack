@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtWidgets import (
     QLabel, QLineEdit, QMessageBox,
-    QPushButton, QVBoxLayout, QWidget,
+    QPushButton, QVBoxLayout, QWidget, QHBoxLayout,
 )
 
 
@@ -35,12 +35,21 @@ class loginwindow(QWidget):
         layout.addWidget(self.username)
         layout.addWidget(self.password)
 
+        exit_button = QPushButton("Exit")
+        exit_button.setObjectName("exit")
+        exit_button.setFixedHeight(40)
+        exit_button.clicked.connect(self.close)
+
         login_button = QPushButton("Login")
-        login_button.setFixedSize(80, 38)
+        login_button.setFixedHeight(40)
         login_button.clicked.connect(self.attempt_login)
         self.username.returnPressed.connect(self.attempt_login)
         self.password.returnPressed.connect(self.attempt_login)
-        layout.addWidget(login_button, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        button_row = QHBoxLayout()
+        button_row.addWidget(exit_button)
+        button_row.addWidget(login_button)
+        layout.addLayout(button_row)
 
         self.setLayout(layout)
 
@@ -80,7 +89,17 @@ class loginwindow(QWidget):
             QPushButton:pressed {
                 background-color: #065da0;
             }
+            QPushButton#exit {
+            background-color: transparent;
+            border: 1px solid #dcdde1;
+            }
+            QPushButton#exit:hover {
+            background-color: #7F1D1D;
+            border: 1px solid #7F1D1D;
+            }
         """)
+
+
 
     def attempt_login(self) -> None:
         employee = self.employee_service.authenticate(

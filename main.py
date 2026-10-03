@@ -17,12 +17,11 @@ def main() -> int:
     login = loginwindow(employee_service)
     state = {"main": None}
 
-    def show_main(employee):
+    def show_main():
         login.hide()
         state["main"] = mainwindow(database)
         state["main"].logged_out.connect(on_logout)
         state["main"].show()
-        login.hide()
 
     def on_logout():
         state["main"].close()
