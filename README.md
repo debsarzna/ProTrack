@@ -97,7 +97,7 @@ A default admin account is created automatically on first run, so you can log in
 1. **Download the project**
 
 ```bash
-   git clone https://github.com/<your-username>/ProTrack.git
+   git clone https://github.com/debsarzna/ProTrack.git
    cd ProTrack
 ```
 
