@@ -9,8 +9,11 @@ A desktop inventory and employee management app built with PyQt6 and SQLite. Pro
 </p>
 
 <br>
-### Features
-Secure login – employees sign in with a username and password. Passwords are never stored in plain text; they are hashed with PBKDF2-HMAC-SHA256 (200,000 iterations) and a unique random salt.
+
+## Features
+
+- **Secure login** – employees sign in with a username and password. Passwords are never stored in plain text; they are hashed with PBKDF2-HMAC-SHA256 (200,000 iterations) and a unique random salt.
+
 Product management – add, update, delete, and search products (name, price, quantity).
 Automatic stock status – each product's status is computed from its quantity and color-coded in the table:
 Quantity	Status
