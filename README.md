@@ -46,7 +46,7 @@ ProTrack is stable for everyday use as a small inventory and staff tracker. Here
 
 * Database: SQLite, stored in a single local file. No server setup needed.
 * Passwords: hashed before storage, never saved or logged in plain text.
-* Stock status rules: Out of Stock at `0`, Low Stock at `10` below, In Stock above that.
+* Stock status rules: Out of Stock at `0`, Low Stock at below `10`, In Stock above that.
 * Multi-user access: designed for one machine at a time. It is not a networked multi-user system.
 * Roles and permissions: not yet. Every employee who can sign in has the same access.
 * Platforms: runs anywhere PyQt6 does (Windows, macOS, Linux).
