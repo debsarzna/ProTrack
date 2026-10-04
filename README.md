@@ -284,3 +284,8 @@ Planned improvements:
    * Icons on buttons and sidebar items
    * Charts on the dashboard for stock status
    * Keyboard shortcuts for common actions
+
+## Author
+
+* **Name:** Dave Luke Martin V. Sarzona
+* **Section:** CS26(3581) 1:30 - 3:30
