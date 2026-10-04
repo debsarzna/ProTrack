@@ -171,6 +171,57 @@ A default admin account is created automatically on first run, so you can log in
 
 6. **Log out**
    * Click Logout when you are done.
+  
+## OOP Implementation
+
+### Important classes and objects
+
+* **Database layer**
+   * `Database`: opens the SQLite connection and creates the `products` and `employees` tables
+   * `ActivityLog`: creates the `activity_log` table, saves each action, and returns the most recent ones. The app uses one shared object, `activity_log`.
+* **Model classes**: objects that hold the data
+   * `Product`: name, price, quantity, status, and id
+   * `Employee`: first name, username, and password hash
+* **Repository classes**: objects that run the SQL queries
+   * `ProductRepository`: add, list, search, update, delete
+   * `EmployeeRepository`: add, list, search, get by username, update, delete
+* **Service classes**: objects that apply the rules and record activity
+   * `ProductService`: add, get, search, update, and delete products
+   * `EmployeeService`: add, update, and delete employees, check unique usernames, hash passwords, log in, and create the default admin
+* **View classes**: the PyQt6 windows and pages
+   * `loginwindow`: the login page
+   * `mainwindow`: the main page, with the sidebar menu and the stacked pages
+   * `HoverMenu`: the sidebar menu that opens when the mouse hovers over it
+   * `Dashboard`: totals, stock status counts, and recent activity
+   * `ProductPage` and `AddProductDialog`: the products table and its add/update form
+   * `EmployeePage` and `EmployeeDialog`: the employees table and its add/update form
+
+### Encapsulation
+
+Each class keeps its data and behavior together and hides the details from the other layers.
+
+* `Database` hides the file path and connection. Other classes only call `connect()`.
+* All SQL lives inside the repository classes. The views never run queries.
+* `ProductService` and `EmployeeService` each create their own repository (`self.repository`), so a view only calls methods such as `add_product()` or `authenticate()`.
+* The models protect their own data. `Product.__post_init__` rejects negative prices and quantities. `Employee.__post_init__` rejects an empty name or username.
+* Password hashing is hidden inside the employee service. Passwords are salted and hashed with PBKDF2-HMAC-SHA256, and only the hash is stored.
+* Helper methods such as `_to_employee()` and `_selected_employee()` are marked with a leading underscore, which means they are only for use inside their own class.
+
+### Inheritance
+
+All the view classes inherit from PyQt6 classes and call `super().__init__()`:
+
+* `loginwindow`, `HoverMenu`, `Dashboard`, `ProductPage`, and `EmployeePage` inherit from `QWidget`
+* `mainwindow` inherits from `QMainWindow`
+* `AddProductDialog` and `EmployeeDialog` inherit from `QDialog`
+
+This gives each class windows, layouts, buttons, and events without rewriting them. ProTrack has no custom base classes of its own.
+
+### Polymorphism
+
+* **Method overriding:** `HoverMenu` overrides `enterEvent()` and `leaveEvent()`, and `Dashboard` overrides `showEvent()`. Each one adds its own behavior and then calls `super()`, so the normal PyQt6 behavior still runs. The dashboard uses this to refresh its numbers every time the page is shown.
+* **Shared method names:** `ProductRepository` and `EmployeeRepository` both provide `add`, `list`, `search`, `update`, and `delete`. The services follow the same pattern, so both features work in the same way even though each uses a different table.
+* **Shared dialog behavior:** `AddProductDialog` and `EmployeeDialog` are both opened with `exec()`, which they inherit from `QDialog`.
 ## Status
 
 ProTrack is stable for everyday use as a small inventory and staff tracker. Here are some points you may have questions about:
