@@ -22,3 +22,9 @@
 - **Activity log** – every add, update, and delete is recorded with a timestamp and shown on the dashboard.
 - **Input validation** – negative prices/quantities, empty fields, and duplicate usernames are rejected with clear messages.
 - **Default admin account** – created automatically on first run so you can log in right away.
+
+<p align="center">
+  <img src="screenshots/product.png" height="300" alt="Products page">
+  &nbsp;&nbsp;
+  <img src="screenshots/employee.png" height="300" alt="Employee page">
+</p>
