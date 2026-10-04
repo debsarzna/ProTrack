@@ -38,3 +38,15 @@ A default admin account is created automatically on first run, so you can log in
   &nbsp;&nbsp;
   <img src="screenshots/employee.png" height="300" alt="Employee page">
 </p>
+
+
+## Status
+
+ProTrack is stable for everyday use as a small inventory and staff tracker. Here are some points you may have questions about:
+
+* Database: SQLite, stored in a single local file. No server setup needed.
+* Passwords: hashed before storage, never saved or logged in plain text.
+* Stock status rules: Out of Stock at `0`, Low Stock at `<LOW_THRESHOLD>` or below, In Stock above that.
+* Multi-user access: designed for one machine at a time. It is not a networked multi-user system.
+* Roles and permissions: not yet. Every employee who can sign in has the same access.
+* Platforms: runs anywhere PyQt6 does (Windows, macOS, Linux).
