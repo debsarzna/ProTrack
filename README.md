@@ -137,8 +137,8 @@ A default admin account is created automatically on first run, so you can log in
 
    On first run, ProTrack creates the database and a default admin account. Sign in with:
 
-   * Username: `<admin-username>`
-   * Password: `<admin-password>`
+   * Username: `admin`
+   * Password: `admin123`
 
    Change this password after your first login.
 
