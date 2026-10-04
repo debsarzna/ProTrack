@@ -61,23 +61,20 @@ A default admin account is created automatically on first run, so you can log in
 
 ## Project Structure
 
-ProTrack/
-├── main.py                 # starts the app and shows the login window
-├── requirements.txt        # Python dependencies
-├── screenshots/            # images used in this README
-└── features/
-    ├── Product/
-    │   ├── model.py        # Product class (the data)
-    │   ├── repository.py   # SQLite queries for products
-    │   ├── service.py      # validation and business rules (stock status)
-    │   └── view.py         # PyQt6 products page
-    └── Employee/
-        ├── model.py        # Employee class (the data)
-        ├── repository.py   # SQLite queries for employees
-        ├── service.py      # validation, unique usernames, password hashing
-        └── view.py         # PyQt6 employees page
-
-Each layer only talks to the one below it: **view → service → repository → database**.
+* **`main.py`**: starts the app and opens the login window
+* **`requirements.txt`**: lists the Python packages the app needs
+* **`screenshots/`**: images used in this README
+* **`features/`**: one folder for each part of the system
+   * **`Product/`**: everything for managing products
+      * `model.py`: defines the data (name, price, quantity)
+      * `repository.py`: reads and writes the products in SQLite
+      * `service.py`: checks input and works out the stock status
+      * `view.py`: the PyQt6 products page
+   * **`Employee/`**: everything for managing employees
+      * `model.py`: defines the data (name, username, password)
+      * `repository.py`: reads and writes the employees in SQLite
+      * `service.py`: checks input, keeps usernames unique, and hashes passwords
+      * `view.py`: the PyQt6 employees page
 
 
 ## Status
