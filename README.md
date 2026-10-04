@@ -1,5 +1,7 @@
 <h1 align="center">ProTrack</h1>
+
 ## About
+
 ProTrack lets you sign in, manage your product stock, manage the employees who can access the system, and keep an eye on everything through a live dashboard with a recent-activity feed.
 
 Each part of the app (products, employees) lives in its own feature folder and is split into model, repository, service, and view layers. The UI never talks to the database directly, which keeps the code easy to read, test, and extend.
