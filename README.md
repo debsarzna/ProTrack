@@ -237,24 +237,28 @@ This gives each class windows, layouts, buttons, and events without rewriting th
 
 The system was tested manually by running the app and trying each feature.
 
-| # | Feature | Test | Expected Result | Actual Result |
-|---|---------|------|-----------------|---------------|
-| 1 | Login | Enter `admin` and `admin123` | Main window opens | Main window opened. Pass |
-| 2 | Login | Enter `admin` with a wrong password | Error message and the login is rejected | "Invalid username or password." appeared and the password box was cleared. Pass |
-| 3 | Products | Add a product: Mouse, price `12.50`, quantity `25` | Product appears in the table with status In Stock | Mouse was added with status In Stock. Pass |
-| 4 | Products | Add a product with quantity `0` | Status is Out of Stock | Status showed Out of Stock in red. Pass |
-| 5 | Products | Add a product with quantity `5` | Status is Low Stock | Status showed Low Stock. Pass |
-| 6 | Products | Add a product with quantity `10` | Status is In Stock, because Low Stock is only below 10 | Status showed In Stock. Pass |
-| 7 | Validation | Add a product with a negative price | Rejected with a message | "Invalid input" message appeared and nothing was saved. Pass |
-| 8 | Validation | Leave a product field empty | Rejected with a message | "Please fill in all fields." appeared. Pass |
-| 9 | Products | Type part of a name in the search box | Only matching products are shown | The table filtered as I typed. Pass |
-| 10 | Products | Select a product, click Update, and change the quantity | Row changes and the status is recalculated | Row updated with the new status. Pass |
-| 11 | Products | Select a product and click Delete, then confirm | Product is removed from the table | Product was removed after confirming. Pass |
-| 12 | Employees | Add an employee with a new username | Employee appears in the table | Employee was added. Pass |
-| 13 | Employees | Add an employee with a username that already exists | Rejected as a duplicate | "That username is already taken" appeared. Pass |
-| 14 | Employees | Edit an employee and leave the password blank | Old password still works at login | Logged in with the old password. Pass |
-| 15 | Dashboard | Add, update, and delete a record, then open the Dashboard | Totals change and the three actions appear in Recent Activity | Counts updated and the three actions were listed. Pass |
-| 16 | Logout | Click Logout in the menu | Returns to the login page with empty fields | Login page appeared with empty fields. Pass |
+## Testing
+
+The system was tested manually by running the app and trying each feature.
+
+| # | Feature | Test | Expected Result | Actual Result | Status |
+|---|---------|------|-----------------|---------------|--------|
+| 1 | Login | Enter `admin` and `admin123` | Main window opens | Main window opened | Pass |
+| 2 | Login | Enter `admin` with a wrong password | Error message and the login is rejected | "Invalid username or password." appeared and the password box was cleared | Pass |
+| 3 | Products | Add a product: Mouse, price `12.50`, quantity `25` | Product appears in the table with status In Stock | Mouse was added with status In Stock | Pass |
+| 4 | Products | Add a product with quantity `0` | Status is Out of Stock | Status showed Out of Stock in red | Pass |
+| 5 | Products | Add a product with quantity `5` | Status is Low Stock | Status showed Low Stock | Pass |
+| 6 | Products | Add a product with quantity `10` | Status is In Stock, because Low Stock is only below 10 | Status showed In Stock | Pass |
+| 7 | Validation | Add a product with a negative price | Rejected with a message | "Invalid input" message appeared and nothing was saved | Pass |
+| 8 | Validation | Leave a product field empty | Rejected with a message | "Please fill in all fields." appeared | Pass |
+| 9 | Products | Type part of a name in the search box | Only matching products are shown | The table filtered as I typed | Pass |
+| 10 | Products | Select a product, click Update, and change the quantity | Row changes and the status is recalculated | Row updated with the new status | Pass |
+| 11 | Products | Select a product and click Delete, then confirm | Product is removed from the table | Product was removed after confirming | Pass |
+| 12 | Employees | Add an employee with a new username | Employee appears in the table | Employee was added | Pass |
+| 13 | Employees | Add an employee with a username that already exists | Rejected as a duplicate | "That username is already taken" appeared | Pass |
+| 14 | Employees | Edit an employee and leave the password blank | Old password still works at login | Logged in with the old password | Pass |
+| 15 | Dashboard | Add, update, and delete a record, then open the Dashboard | Totals change and the three actions appear in Recent Activity | Counts updated and the three actions were listed | Pass |
+| 16 | Logout | Click Logout in the menu | Returns to the login page with empty fields | Login page appeared with empty fields | Pass |
 
 ## Status
 
