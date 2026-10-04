@@ -65,8 +65,12 @@ A default admin account is created automatically on first run, so you can log in
 * **`database/`**: sets up the SQLite database and its connection
 * **`windows/`**: the main windows of the app
    * `login_window.py`: the login page where employees sign in
-   * `main_window.py`: the main page with the dashboard and the navigation to each feature
+   * `main_window.py`: the main page with the navigation to each feature
 * **`features/`**: one folder for each part of the system
+   * **`Dashboard/`**: the overview page with totals and recent activity
+      * `repository.py`: reads the product and employee counts, the stock status counts, and the activity log
+      * `service.py`: prepares the numbers and the 10 most recent actions for display
+      * `view.py`: the PyQt6 dashboard page
    * **`Product/`**: everything for managing products
       * `model.py`: defines the data (name, price, quantity)
       * `repository.py`: reads and writes the products in SQLite
