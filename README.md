@@ -82,6 +82,65 @@ A default admin account is created automatically on first run, so you can log in
       * `service.py`: checks input, keeps usernames unique, and hashes passwords
       * `view.py`: the PyQt6 employees page
 
+## Installation and Setup
+
+### Requirements
+
+* Python 3.10 or newer
+* Git (to download the project)
+* Dependencies:
+   * **PyQt6**: the GUI framework
+   * **SQLite**: the database, which is built into Python, so you don't need to install it
+
+### Steps
+
+1. **Download the project**
+
+```bash
+   git clone https://github.com/<your-username>/ProTrack.git
+   cd ProTrack
+```
+
+2. **Create a virtual environment** (recommended)
+
+```bash
+   python -m venv venv
+```
+
+3. **Activate the virtual environment**
+
+   * Windows:
+
+```bash
+     venv\Scripts\activate
+```
+
+   * macOS/Linux:
+
+```bash
+     source venv/bin/activate
+```
+
+4. **Install the dependencies**
+
+```bash
+   pip install PyQt6
+```
+
+5. **Run the application**
+
+```bash
+   python main.py
+```
+
+6. **Log in**
+
+   On first run, ProTrack creates the database and a default admin account. Sign in with:
+
+   * Username: `<admin-username>`
+   * Password: `<admin-password>`
+
+   Change this password after your first login.
 
 ## Status
 
