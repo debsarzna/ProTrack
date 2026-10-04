@@ -142,6 +142,35 @@ A default admin account is created automatically on first run, so you can log in
 
    Change this password after your first login.
 
+## How to Use the System
+
+1. **Log in**
+   * Start the app and enter your username and password, then click Login.
+   * On first run, use the default admin account.
+
+2. **View the dashboard**
+   * After login, the dashboard shows the totals for products and employees.
+   * It also shows how many items are In Stock, Low Stock, and Out of Stock, and the 10 most recent actions.
+
+3. **Manage products**
+   * Open the Products page.
+   * To add a product, enter the name, price, and quantity, then click Add.
+   * To update or delete a product, select it in the table, make your changes, then click Update or Delete.
+   * To find a product, type its name in the search box.
+   * The stock status updates automatically from the quantity.
+
+4. **Manage employees**
+   * Open the Employees page.
+   * To add an employee, fill in the details and a unique username, then click Add.
+   * To update or delete an employee, select them in the table, then click Update or Delete.
+   * When editing, leave the password blank to keep the current one.
+   * To find an employee, type a name or username in the search box.
+
+5. **Check recent activity**
+   * Every add, update, and delete appears in the recent-activity feed on the dashboard, with a timestamp.
+
+6. **Log out**
+   * Click Logout when you are done.
 ## Status
 
 ProTrack is stable for everyday use as a small inventory and staff tracker. Here are some points you may have questions about:
