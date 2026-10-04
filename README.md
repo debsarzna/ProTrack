@@ -59,6 +59,26 @@ A default admin account is created automatically on first run, so you can log in
 | Database | SQLite (built into Python through the `sqlite3` module) |
 | Other libraries and tools | hashlib, Git and GitHub |
 
+## Project Structure
+
+ProTrack/
+├── main.py                 # starts the app and shows the login window
+├── requirements.txt        # Python dependencies
+├── screenshots/            # images used in this README
+└── features/
+    ├── Product/
+    │   ├── model.py        # Product class (the data)
+    │   ├── repository.py   # SQLite queries for products
+    │   ├── service.py      # validation and business rules (stock status)
+    │   └── view.py         # PyQt6 products page
+    └── Employee/
+        ├── model.py        # Employee class (the data)
+        ├── repository.py   # SQLite queries for employees
+        ├── service.py      # validation, unique usernames, password hashing
+        └── view.py         # PyQt6 employees page
+
+Each layer only talks to the one below it: **view → service → repository → database**.
+
 
 ## Status
 
