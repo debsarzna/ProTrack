@@ -62,8 +62,10 @@ A default admin account is created automatically on first run, so you can log in
 ## Project Structure
 
 * **`main.py`**: starts the app and opens the login window
-* **`requirements.txt`**: lists the Python packages the app needs
-* **`screenshots/`**: images used in this README
+* **`database/`**: sets up the SQLite database and its connection
+* **`windows/`**: the main windows of the app
+   * `login_window.py`: the login page where employees sign in
+   * `main_window.py`: the main page with the dashboard and the navigation to each feature
 * **`features/`**: one folder for each part of the system
    * **`Product/`**: everything for managing products
       * `model.py`: defines the data (name, price, quantity)
