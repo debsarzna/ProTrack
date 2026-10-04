@@ -17,6 +17,17 @@ A default admin account is created automatically on first run, so you can log in
 
 <br>
 
+## Project Objectives
+
+* Build a desktop application that manages products and employees with full Create, Read, Update, Delete, and Search operations
+* Automatically show each product's stock status (In Stock, Low Stock, Out of Stock) from its quantity
+* Protect access with a login system that stores passwords securely
+* Record every add, update, and delete in an activity log
+* Validate user input so bad data is rejected with clear messages
+* Apply object-oriented programming and a layered design (model, repository, service, view) to keep the code organized and easy to extend
+
+<br>
+
 ## Features
 
 * Secure login with username and password
@@ -38,6 +49,15 @@ A default admin account is created automatically on first run, so you can log in
   &nbsp;&nbsp;
   <img src="screenshots/employee.png" height="300" alt="Employee page">
 </p>
+
+## Technologies Used
+
+| Category | Technology |
+|----------|------------|
+| Programming language | Python 3.10+ |
+| GUI framework | PyQt6 |
+| Database | SQLite (built into Python through the `sqlite3` module) |
+| Other libraries and tools | hashlib, Git and GitHub |
 
 
 ## Status
