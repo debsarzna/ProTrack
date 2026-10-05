@@ -237,10 +237,6 @@ This gives each class windows, layouts, buttons, and events without rewriting th
 
 The system was tested manually by running the app and trying each feature.
 
-## Testing
-
-The system was tested manually by running the app and trying each feature.
-
 | # | Feature | Test | Expected Result | Actual Result | Status |
 |---|---------|------|-----------------|---------------|--------|
 | 1 | Login | Enter `admin` and `admin123` | Main window opens | Main window opened | Pass |
