@@ -59,8 +59,7 @@ A default admin account is created automatically on first run, so you can log in
    * `main_window.py`: the main page with the navigation to each feature
 * **`features/`**: one folder for each part of the system
    * **`Dashboard/`**: the overview page with totals and recent activity
-      * `repository.py`: reads the product and employee counts, the stock status counts, and the activity log
-      * `service.py`: prepares the numbers and the 10 most recent actions for display
+      * `activity_log.py`: Records actions like add, update, and delete into the activity_log table, and gets the recent ones for the dashboard.
       * `view.py`: the PyQt6 dashboard page
    * **`Product/`**: everything for managing products
       * `model.py`: defines the data (name, price, quantity)
