@@ -24,6 +24,18 @@ class Database:
             )
             con.execute(
                 """
+                CREATE TABLE IF NOT EXISTS stock_movements (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    product_id INTEGER NOT NULL,
+                    movement_type TEXT NOT NULL,
+                    amount INTEGER NOT NULL,
+                    quantity_after INTEGER NOT NULL,
+                    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+                )
+                """
+            )
+            con.execute(
+                """
                 CREATE TABLE IF NOT EXISTS employees (
                     username TEXT PRIMARY KEY,
                     first_name TEXT NOT NULL,

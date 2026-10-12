@@ -15,3 +15,13 @@ class Product:
             raise ValueError("Price cannot be negative")
         if self.quantity < 0:
             raise ValueError("Quantity cannot be negative")
+
+
+@dataclass
+class StockMovement:
+    id: int
+    product_id: int
+    movement_type: str      # "in" or "out"
+    amount: int
+    quantity_after: int
+    created_at: str
