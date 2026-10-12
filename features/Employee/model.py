@@ -6,7 +6,7 @@ class Employee:
     first_name: str
     username: str
     password_hash: str
-
+    role: str = "employee"
     def __post_init__(self) -> None:
         self.first_name = self.first_name.strip()
         self.username = self.username.strip()

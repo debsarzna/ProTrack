@@ -7,23 +7,25 @@ class EmployeeRepository:
         self.database = database
 
     def _to_employee(self, row) -> Employee:
-        return Employee(first_name=row[0], username=row[1], password_hash=row[2])
+        return Employee(first_name=row[0], username=row[1],
+                        password_hash=row[2], role=row[3])
 
     def add(self, employee: Employee) -> Employee:
         with self.database.connect() as con:
             con.execute(
                 """
-                INSERT INTO employees (username, first_name, password_hash)
-                VALUES (?, ?, ?)
+                INSERT INTO employees (username, first_name, password_hash, role)
+                VALUES (?, ?, ?, ?)
                 """,
-                (employee.username, employee.first_name, employee.password_hash)
+                (employee.username, employee.first_name,
+                 employee.password_hash, employee.role)
             )
         return employee
 
     def list(self) -> list[Employee]:
         with self.database.connect() as con:
             rows = con.execute(
-                "SELECT first_name, username, password_hash FROM employees"
+                "SELECT first_name, username, password_hash, role FROM employees"
             ).fetchall()
         return [self._to_employee(row) for row in rows]
 
@@ -32,7 +34,7 @@ class EmployeeRepository:
         with self.database.connect() as con:
             rows = con.execute(
                 """
-                SELECT first_name, username, password_hash
+                SELECT first_name, username, password_hash, role
                 FROM employees
                 WHERE first_name LIKE ? OR username LIKE ?
                 """,
@@ -43,7 +45,7 @@ class EmployeeRepository:
     def get_by_username(self, username: str) -> Employee | None:
         with self.database.connect() as con:
             row = con.execute(
-                "SELECT first_name, username, password_hash FROM employees WHERE username = ?",
+                "SELECT first_name, username, password_hash, role FROM employees WHERE username = ?",
                 (username,)
             ).fetchone()
         return self._to_employee(row) if row else None

@@ -5,12 +5,14 @@ from features.Employee.model import Employee
 
 class EmployeeDialog(QDialog):
 
-    def __init__(self, parent=None, employee=None):
+    def __init__(self, parent=None, employee=None, ask_password=True):
         super().__init__(parent)
         self.is_edit = employee is not None
+        # the "Your Password" field only appears for non-admins who are updating
+        self.ask_password = self.is_edit and ask_password
 
         self.setWindowTitle("Update Employee" if self.is_edit else "Add Employee")
-        self.setFixedSize(350, 350)
+        self.setFixedSize(350, 430 if self.ask_password else 350)
 
         layout = QVBoxLayout(self)
 
@@ -21,6 +23,11 @@ class EmployeeDialog(QDialog):
         username_label = QLabel("Username")
         self.username_input = QLineEdit()
         self.username_input.setPlaceholderText("Enter username")
+
+        old_password_label = QLabel("Your Password")
+        self.old_password_input = QLineEdit()
+        self.old_password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self.old_password_input.setPlaceholderText("Enter YOUR password to confirm")
 
         password_label = QLabel("New Password" if self.is_edit else "Password")
         self.password_input = QLineEdit()
@@ -41,6 +48,9 @@ class EmployeeDialog(QDialog):
         layout.addWidget(self.first_name_input)
         layout.addWidget(username_label)
         layout.addWidget(self.username_input)
+        if self.ask_password:
+            layout.addWidget(old_password_label)
+            layout.addWidget(self.old_password_input)
         layout.addWidget(password_label)
         layout.addWidget(self.password_input)
         layout.addStretch()
@@ -60,6 +70,54 @@ class EmployeeDialog(QDialog):
             QMessageBox.warning(self, "Missing information", "Password is required.")
             return
 
+        if self.ask_password and password and not self.old_password_input.text():
+            QMessageBox.warning(self, "Missing information",
+                                "Enter your password to set a new one.")
+            return
+
+        self.accept()
+
+
+class ChangePasswordDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Change My Password")
+        self.setFixedSize(350, 330)
+
+        layout = QVBoxLayout(self)
+
+        self.old_input = QLineEdit()
+        self.new_input = QLineEdit()
+        self.confirm_input = QLineEdit()
+        for field, placeholder in (
+            (self.old_input, "Enter old password"),
+            (self.new_input, "Enter new password"),
+            (self.confirm_input, "Repeat new password"),
+        ):
+            field.setEchoMode(QLineEdit.EchoMode.Password)
+            field.setPlaceholderText(placeholder)
+
+        submit_button = QPushButton("Change Password")
+        submit_button.setFixedHeight(40)
+        submit_button.clicked.connect(self.validate_and_accept)
+
+        layout.addWidget(QLabel("Old Password"))
+        layout.addWidget(self.old_input)
+        layout.addWidget(QLabel("New Password"))
+        layout.addWidget(self.new_input)
+        layout.addWidget(QLabel("Confirm New Password"))
+        layout.addWidget(self.confirm_input)
+        layout.addStretch()
+        layout.addWidget(submit_button)
+
+    def validate_and_accept(self):
+        if not self.old_input.text() or not self.new_input.text():
+            QMessageBox.warning(self, "Missing information",
+                                "Old and new passwords are required.")
+            return
+        if self.new_input.text() != self.confirm_input.text():
+            QMessageBox.warning(self, "Mismatch", "The new passwords don't match.")
+            return
         self.accept()
 
 
@@ -156,6 +214,11 @@ class EmployeePage(QWidget):
         button_row.addWidget(delete_button)
         layout.addLayout(button_row)
 
+        # non-admin accounts get a view-only table
+        if not self.employee_service.is_admin:
+            add_button.hide()
+            delete_button.hide()
+
         self.load_employees()
 
     def load_employees(self, employees=None):
@@ -189,7 +252,7 @@ class EmployeePage(QWidget):
                     username=dialog.username_input.text(),
                     password=dialog.password_input.text(),
                 )
-            except ValueError as e:
+            except (ValueError, PermissionError) as e:
                 QMessageBox.warning(self, "Cannot add employee", str(e))
                 return
             self.search_employees()
@@ -199,7 +262,12 @@ class EmployeePage(QWidget):
         if current is None:
             return
 
-        dialog = EmployeeDialog(self, current)
+        service = self.employee_service
+        if not service.is_admin and current.username != service.current_user.username:
+            QMessageBox.information(self, "Update", "You can only edit your own account.")
+            return
+
+        dialog = EmployeeDialog(self, current, ask_password=not service.is_admin)
         if dialog.exec():
             try:
                 updated = Employee(
@@ -207,10 +275,12 @@ class EmployeePage(QWidget):
                     username=dialog.username_input.text(),
                     password_hash=current.password_hash,
                 )
-                self.employee_service.update_employee(
-                    current.username, updated, dialog.password_input.text()
+                service.update_employee(
+                    current.username, updated,
+                    dialog.password_input.text(),
+                    dialog.old_password_input.text(),
                 )
-            except ValueError as e:
+            except (ValueError, PermissionError) as e:
                 QMessageBox.warning(self, "Cannot update employee", str(e))
                 return
             self.search_employees()
@@ -224,7 +294,11 @@ class EmployeePage(QWidget):
             self, "Confirm delete", f"Delete '{current.username}'?"
         )
         if answer == QMessageBox.StandardButton.Yes:
-            self.employee_service.delete_employee(current.username)
+            try:
+                self.employee_service.delete_employee(current.username)
+            except (ValueError, PermissionError) as e:
+                QMessageBox.warning(self, "Cannot delete employee", str(e))
+                return
             self.search_employees()
 
     def search_employees(self):
