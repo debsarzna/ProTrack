@@ -28,11 +28,6 @@ A default admin account is created automatically on first run, so you can log in
 * Employee Management: Displays all employee records, and lets you add, update, and delete employees.
 * Dashboard: Shows a summary of the records and recent activity (add, update, delete).
 
-<p align="center">
-  <img src="screenshots/product.png" height="300" alt="Products page">
-  &nbsp;&nbsp;
-  <img src="screenshots/employee.png" height="300" alt="Employee page">
-</p>
 
 ## Technologies Used
 
