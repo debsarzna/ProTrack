@@ -12,22 +12,43 @@ A default admin account is created automatically on first run, so you can log in
 
 ## Project Objectives
 
-* Build a desktop application that manages products and employees with full Create, Read, Update, Delete, and Search operations
-* Automatically show each product's stock status (In Stock, Low Stock, Out of Stock) from its quantity
-* Protect access with a login system that stores passwords securely
-* Record every add, update, and delete in an activity log
-* Validate user input so bad data is rejected with clear messages
-* Apply object-oriented programming and a layered design (model, repository, service, view) to keep the code organized and easy to extend
+* To build a desktop application that manages products and employees with full Create, Read, Update, Delete, and Search operations
+* To automatically show each product's stock status (In Stock, Low Stock, Out of Stock) from its quantity
+* To protect access with a login system that stores passwords securely
+* To record every add, update, and delete in an activity log
+* To validate user input so bad data is rejected with clear messages
+* To apply object-oriented programming and a layered design (model, repository, service, view) to keep the code organized and easy to extend
 
 <br>
 
 ## Features
 
-* Login: Only authorized users can enter the system.
-* Product Management: Displays all product records, and lets you add, update, and delete products.
-* Employee Management: Displays all employee records, and lets you add, update, and delete employees.
-* Dashboard: Shows a summary of the records and recent activity (add, update, delete).
-
+* **Login**: only authorized users can enter the system
+   * Sign in with a username and password
+   * Reject wrong credentials with an error message
+   * Create a default admin account on first run
+   * Log out and return to the login page
+* **Product Management**: everything for handling products
+   * View all products in a table
+   * Add a product (name, price, quantity)
+   * Update or delete a selected product
+   * Stock In: add received items to a product's quantity
+   * Stock Out: subtract sold or removed items from a product's quantity
+   * Search products by name
+   * Show the stock status automatically from the quantity
+   * Reject invalid input, such as empty fields or negative values
+* **Employee Management**: everything for handling employees
+   * View all employees in a table
+   * Add an employee with a unique username
+   * Update or delete a selected employee
+   * Search employees by name or username
+   * Hash passwords before saving them
+   * Keep the current password when the password box is left blank
+* **Dashboard**: the overview page
+   * Show the totals for products and employees
+   * Show how many products are In Stock, Low Stock, and Out of Stock
+   * Show the 10 most recent actions (add, update, delete) with timestamps
+   * Refresh the numbers every time the page is shown
 
 ## Technologies Used
 
