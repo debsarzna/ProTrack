@@ -81,6 +81,51 @@ A default admin account is created automatically on first run, so you can log in
       * `service.py`: checks input, keeps usernames unique, and hashes passwords
       * `view.py`: the PyQt6 employees page
 
+
+## Database Tables
+
+ProTrack stores its data in a single SQLite file (`inventory.db`) with four tables.
+
+### `products`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | INTEGER (Primary Key) | Unique ID, generated automatically |
+| `name` | TEXT | Product name |
+| `price` | REAL | Product price |
+| `quantity` | INTEGER | Number of items in stock |
+| `status` | TEXT | In Stock, Low Stock, or Out of Stock |
+
+### `stock_movements`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | INTEGER (Primary Key) | Unique ID, generated automatically |
+| `product_id` | INTEGER | The product that was changed (matches `products.id`) |
+| `movement_type` | TEXT | Stock In or Stock Out |
+| `amount` | INTEGER | How many items were added or removed |
+| `quantity_after` | INTEGER | The product's quantity after the movement |
+| `created_at` | TEXT | Date and time of the movement, set automatically |
+
+### `employees`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `username` | TEXT (Primary Key) | Name used to log in, must be unique |
+| `first_name` | TEXT | Employee's name |
+| `password_hash` | TEXT | Salted PBKDF2-HMAC-SHA256 hash, never the plain password |
+| `role` | TEXT | `admin` or `employee` (default is `employee`) |
+
+### `activity_log`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | INTEGER (Primary Key) | Unique ID, generated automatically |
+| `action` | TEXT | Add, Update, or Delete |
+| `description` | TEXT | What was changed |
+| `timestamp` | TEXT | When the action happened |
+
+
 ## Installation and Setup
 
 ### Requirements
