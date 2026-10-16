@@ -10,13 +10,6 @@ A default admin account is created automatically on first run, so you can log in
 
 <br>
 
-<p align="center">
-  <img src="screenshots/login.png" width="300" alt="ProTrack login screen">
-  <img src="screenshots/dashboard.png" width="450" alt="ProTrack dashboard">
-</p>
-
-<br>
-
 ## Project Objectives
 
 * Build a desktop application that manages products and employees with full Create, Read, Update, Delete, and Search operations
